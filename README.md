@@ -1,6 +1,32 @@
 # ESP32_OLED_UDP_streamer
 Stream images over UDP to ESP32 and display on OLED SSD1306 
 
+
+This project is based on lcd-image-converter:
+https://lcd-image-converter.riuson.com/en/docs/others/command-line/convert-image/
+
+How it works:
+ - the screen is captured with imagemagick 
+ - the lcd-image-converter generates the Monochrome C file for data
+ - this output file is compiled and sent over UDP(first the size HeightxWidth, then the data)
+ - the ESP32 receives the data over UDP
+ - ESP32 sends the data to OLED SSD1306 128x64 display
+ 
+ It works, it's not optimized and with my learning programming know-how it just just existing pieces put together
+ 
+ Utility - just for fun
+ Use at your own risk :)
+ 
+ How to use:
+  - compile the lcd-image-converter - you will need qtcreator and some additional libraries
+  - take the binary and put it where you also put the_rundown.sh
+  - adapt
+  #define serverIP "192.168.178.100"   in sender.c
+  - adapt the Arduino .ino file with your wlan information
+  - chmod +x the_rundown.sh
+  - ./the_rundown.sh  and hold on to your pants cuz this will write files and open sockets for every frame :D 
+  
+  
 import -monochrome -window root -resize 128x64 test.bmp
 here maybe check for the display you want to stream ? Imagemagick tutorial
 //convert -threshold 80 test.bmp out_black.bmp
